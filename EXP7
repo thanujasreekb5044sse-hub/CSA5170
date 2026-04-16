@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+char substitute(char symbol) {
+    switch(symbol) {
+        case '†': return 'E';
+        case '‡': return 'T';
+        case '(': return 'H';
+        case ')': return 'E';
+        case '*': return 'S';
+        case ';': return 'O';
+        case '8': return 'N';
+        case '4': return 'A';
+        case '5': return 'R';
+        case '6': return 'D';
+        case '2': return 'L';
+        case '3': return 'M';
+        case '0': return 'C';
+        case '1': return 'U';
+        case '9': return 'I';
+        case '—': return 'Y';
+        case ':': return 'G';
+        case ']': return 'B';
+        case '?': return 'F';
+        case '.': return 'P';
+        case '¶': return 'K';
+        default: return symbol; 
+    }
+}
+
+int main() {
+    char ciphertext[] =
+        "53‡‡†305))6*;4826)4‡.)4‡);806*;48†8¶60))85;;]8*;:"
+        "‡*8†83(88)5*†;46(;88*96*?;8)*‡(;485);5*†2:*‡(;4956*2"
+        "(5*—4)8¶8*;4069285);)6†8)4‡‡;1(‡9;48081;8:8‡1;48†85;"
+        "4)485†528806*81(‡9;48;(88;4(‡?34;48)4‡;161;:188;‡?;";
+
+    char plaintext[1000];
+    int len = strlen(ciphertext);
+    for (int i = 0; i < len; i++) {
+        plaintext[i] = substitute(ciphertext[i]);
+    }
+    plaintext[len] = '\0';
+
+    printf("Decrypted Output (partially mapped):\n%s\n", plaintext);
+
+    return 0;
+}
