@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+void generateKey(char* plaintext, char* key, char* newKey) {
+    int keyLen = strlen(key);
+    int j = 0;
+
+    for (int i = 0; plaintext[i] != '\0'; i++) {
+        if (isalpha(plaintext[i])) {
+            newKey[i] = tolower(key[j % keyLen]);
+            j++;
+        } else {
+            newKey[i] = plaintext[i]; 
+        }
+    }
+    newKey[strlen(plaintext)] = '\0';
+}
+void encrypt(char* plaintext, char* key, char* ciphertext) {
+    int len = strlen(plaintext);
+    char newKey[1000];
+
+    generateKey(plaintext, key, newKey);
+
+    for (int i = 0; i < len; i++) {
+        if (isalpha(plaintext[i])) {
+            char base = islower(plaintext[i]) ? 'a' : 'A';
+            int shift = newKey[i] - 'a';
+
+            ciphertext[i] = ((plaintext[i] - base + shift) % 26) + base;
+        } else {
+            ciphertext[i] = plaintext[i];
+        }
+    }
+    ciphertext[len] = '\0';
+}
+
+int main() {
+    char plaintext[1000], key[100], ciphertext[1000];
+
+    printf("Enter the plaintext: ");
+    fgets(plaintext, sizeof(plaintext), stdin);
+    plaintext[strcspn(plaintext, "\n")] = '\0';
+
+    printf("Enter the key: ");
+    scanf("%s", key);
+
+    encrypt(plaintext, key, ciphertext);
+
+    printf("Encrypted message: %s\n", ciphertext);
+
+    return 0;
+}
