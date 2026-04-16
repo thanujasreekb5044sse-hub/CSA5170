@@ -1,0 +1,14 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    double log2_total_keys = 0.0;
+    for (int i = 1; i <= 25; i++) {
+        log2_total_keys += log2(i);
+    }
+
+    printf("Approximate keyspace size: 2^%.0f\n", log2_total_keys);
+    printf("Effectively unique keys (approximate): 2^61\n");
+
+    return 0;
+}
